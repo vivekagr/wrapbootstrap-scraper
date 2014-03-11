@@ -1,10 +1,11 @@
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, render_template
 from models import Template, db_connect
+from settings import DATABASE
 
 app = Flask(__name__)
 app.secret_key = 'dev'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///wrapbootstrap'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 
 engine = db_connect()
 Session = sessionmaker(bind=engine)
