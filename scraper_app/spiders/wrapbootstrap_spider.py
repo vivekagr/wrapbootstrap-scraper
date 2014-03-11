@@ -22,14 +22,22 @@ class WrapBootstrapSpider(CrawlSpider):
         """
         Callback used by Scrapy to process downloaded responses
         """
-        coffee = True if 'cups of coffee' in response.body_as_unicode() else False
+        response_body = response.body_as_unicode()
+
+        coffee = True if 'cups of coffee' in response_body else False
+        released_div_pos = 10
+        if 'Uses Sass:' in response_body:
+            released_div_pos += 1
+        if 'Categories:' in response_body:
+            released_div_pos += 1
+
         item_fields = {
             'item_hash': '//*[@id="offer_sku"]/text()',
             'title': '//*[@id="thing_name"]/text()',
             'thumbnail': '//*[@id="thing_image"]/@src',
             'description': '//*[@id="description"]',
             'creator': '//*[@id="product_manufacturer"]/text()',
-            'when': '//*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[%d]/table/tbody/tr[%d]/td[2]/text()' % ((4, 12) if coffee else (3, 10)),
+            'when': '//*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[%d]/table/tbody/tr[%d]/td[2]/text()' % ((4, released_div_pos) if coffee else (3, released_div_pos)),
             'bootstrap_version': 'substring-after(normalize-space(//*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[{}]/table/tbody/tr[2]/td[2]/text()), "Compatible with ")'.format(4 if coffee else 3),
             'cost_single': 'substring-after(normalize-space(//*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[{}]/div[1]/span/text()), "$")'.format(3 if coffee else 2),
             'cost_multiple': 'substring-after(normalize-space(//*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[{}]/div[2]/a/span/text()), "$")'.format(3 if coffee else 2),
