@@ -18,7 +18,7 @@ class WrapBootstrapSpider(CrawlSpider):
         Rule(SgmlLinkExtractor(allow=('themes/', 'tag/')), follow=True),
     )
 
-    def parse(self, response):
+    def parse_template(self, response):
         """
         Callback used by Scrapy to process downloaded responses
         //*[@id="page_theme"]/div[2]/div/div/div/div[2]/div[4]/table/tbody/tr[10]/td[2]
