@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, render_template
-from models import Template, db_connect
-from settings import DATABASE
+from scraper_app.models import Template, db_connect
+from scraper_app.settings import DATABASE
 
 app = Flask(__name__)
 app.secret_key = 'dev'
