@@ -41,8 +41,8 @@
                 <td><a href="https://wrapbootstrap.com/theme/a-{{ template.item_hash }}" target="_blank">{{ template.title }}</a></td>
                 <td>{{ template.bootstrap_version }}</td>
                 <td>${{ template.cost_single }}</td>
-                <td>${{ template.cost_multiple }}</td>
-                <td>${{ template.cost_extended }}</td>
+                <td>{% if template.cost_multiple %}${{ template.cost_multiple }}{% endif %}</td>
+                <td>{% if template.cost_extended %}${{ template.cost_extended }}{% endif %}</td>
                 <td>{{ template.purchases }}</td>
                 <td>${{ template.cost_single * template.purchases if template.cost_single }}</td>
                 <td>{{ template.when }}</td>
